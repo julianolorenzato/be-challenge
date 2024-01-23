@@ -32,7 +32,4 @@ Route.resource('products', 'ProductsController')
 	.where('id', checkIsNumber)
 	.as('products')
 
-Route.resource('sales', 'SalesController')
-	.apiOnly()
-	.where('id', checkIsNumber)
-	.as('sales')
+Route.post('/sales', 'SalesController.register').where('id', checkIsNumber)

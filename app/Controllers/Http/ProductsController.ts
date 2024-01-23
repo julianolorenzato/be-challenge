@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
 import Product from 'App/Models/Product'
 import CreateProductValidator from 'App/Validators/CreateProductValidator'
 import UpdateProductValidator from 'App/Validators/UpdateProductValidator'

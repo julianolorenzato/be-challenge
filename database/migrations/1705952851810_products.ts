@@ -8,7 +8,7 @@ export default class extends BaseSchema {
 			table.increments('id', { primaryKey: true })
 			table.string('name').notNullable()
 			table.string('description').notNullable()
-			table.float('price').notNullable()
+			table.float('price').unsigned().notNullable()
 			table.integer('quantity_in_stock').unsigned().notNullable()
 
 			/**
