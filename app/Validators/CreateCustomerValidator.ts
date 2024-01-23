@@ -25,7 +25,21 @@ export default class CreateCustomerValidator {
 	 */
 	public schema = schema.create({
 		email: schema.string({}, [rules.email(), rules.maxLength(255)]),
-		cpf: schema.string({}, [rules.regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)])
+		cpf: schema.string({}, [rules.regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)]), // xxx.xxx.xxx-xx
+		address: schema.object().members({
+			cep: schema.string({}, [rules.regex(/\d{5}-\d{3}/)]), // xxxxx-xxx
+			number: schema.number(),
+			street: schema.string({}, [rules.maxLength(500)]),
+			neighborhood: schema.string({}, [rules.maxLength(200)]),
+			complement: schema.string.optional({}, [rules.maxLength(500)]),
+			city: schema.string({}, [rules.maxLength(300)]),
+			country: schema.string({}, [rules.maxLength(100)])
+		}),
+		phone: schema.string({}, [
+			rules.regex(
+				/^\s*(\d{2}|\d{0})[-. ]?(\d{5}|\d{4})[-. ]?(\d{4})[-. ]?\s*$/
+			) // xx, xxxxx xxxx, xx xxxx xxxx, xxxx xxxx, xxxxx xxxx com ou sem espaços
+		])
 	})
 
 	/**

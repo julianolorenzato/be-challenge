@@ -5,27 +5,74 @@ import CreateCustomerValidator from 'App/Validators/CreateCustomerValidator'
 
 export default class CustomersController {
 	public async index({}: HttpContextContract) {
-		const customers = await Database.transaction(async trx => {
-			return await trx.query().select('*').from('customers').orderBy('id')
-		})
+		return await Customer.query()
+			.preload('address')
+			.preload('phone')
+			.orderBy('id')
 
-		return customers
+		// return costumers.map(costumer =>
+		// 	costumer.serialize({
+		// 		relations: {
+		// 			address: {
+		// 				fields: {
+		// 					pick: [
+		// 						'cep',
+		// 						'number',
+		// 						'street',
+		// 						'complement',
+		// 						'neighborhood',
+		// 						'city',
+		// 						'country'
+		// 					]
+		// 				}
+		// 			},
+		// 			phone: {
+		// 				fields: {
+		// 					pick: ['number']
+		// 				}
+		// 			}
+		// 		}
+		// 	})
+		// )
 	}
 
 	public async store({ request }: HttpContextContract) {
-		const payload = await request.validate(CreateCustomerValidator)
+		const { email, cpf, address, phone } = await request.validate(
+			CreateCustomerValidator
+		)
 
-		const { email, cpf } = payload
+		const exists = await Customer.findBy('cpf', cpf)
+		if (exists && !exists.$isDeleted) {
+			return { error: 'Este cpf já foi cadastrato' }
+		}
 
-		const customer = new Customer(email, cpf)
-		await customer.save()
+		return await Database.transaction(async trx => {
+			const customer = new Customer()
+				.fill({ email, cpf })
+				.useTransaction(trx)
 
-		return customer.toJSON()
+			await customer.save()
+			await customer.related('address').create(address)
+			await customer.related('phone').create({ number: phone })
+
+			return customer
+		})
 	}
 
 	public async show({}: HttpContextContract) {}
 
 	public async update({}: HttpContextContract) {}
 
-	public async destroy({}: HttpContextContract) {}
+	public async destroy({ params: { id } }: HttpContextContract) {
+		if (!id) {
+			return { error: 'Informe o id do cliente' }
+		}
+
+		const customer = await Customer.find(id)
+		if (!customer || customer.$isDeleted) {
+			return { error: 'Este cliente não existe ou já foi deletado' }
+		}
+
+		await customer.delete()
+	}
 }

@@ -7,7 +7,7 @@ export default class extends BaseSchema {
 		this.schema.createTable(this.tableName, table => {
 			table.increments('id', { primaryKey: true })
 			table.string('cep').notNullable()
-			table.string('number').notNullable()
+			table.integer('number').unsigned().notNullable()
 			table.string('street').notNullable()
 			table.string('neighborhood').notNullable()
 			table.string('complement').nullable()
