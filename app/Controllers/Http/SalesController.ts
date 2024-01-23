@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Customer from 'App/Models/Customer'
 import Product from 'App/Models/Product'
 import Sale from 'App/Models/Sale'
@@ -28,12 +29,22 @@ export default class SalesController {
 			}
 		}
 
-		return await Sale.create({
-			customerId,
-			productId,
-			quantity,
-			unitPrice: product.price,
-			totalPrice: product.price * quantity
+		return await Database.transaction(async trx => {
+			const sale = new Sale()
+				.fill({
+					customerId,
+					productId,
+					quantity,
+					unitPrice: product.price,
+					totalPrice: product.price * quantity
+				})
+				.useTransaction(trx)
+
+			product.useTransaction(trx)
+			product.quantityInStock -= quantity
+
+			await product.save()
+			return await sale.save()
 		})
 	}
 }

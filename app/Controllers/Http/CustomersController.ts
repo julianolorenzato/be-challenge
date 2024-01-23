@@ -36,7 +36,20 @@ export default class CustomersController {
 		})
 	}
 
-	public async show({}: HttpContextContract) {}
+	public async show({ response, params: { id } }: HttpContextContract) {
+		if (!id) {
+			response.status(400)
+			return { error: 'Informe o id do cliente' }
+		}
+
+		const customer = await Customer.find(id)
+		if (!customer || customer.$isDeleted) {
+			response.status(400)
+			return { error: 'Este cliente não existe ou já foi deletado' }
+		}
+
+		return await Customer.query().where({ id }).preload('sales')
+	}
 
 	public async update({
 		request,
