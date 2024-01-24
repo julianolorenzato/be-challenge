@@ -350,7 +350,7 @@ Esta rota atualiza informações de um cliente.
 }
 ```
 
-#### DELETE /products:id
+#### DELETE /products/:id
 
 Esta rota deleta um cliente.
 
