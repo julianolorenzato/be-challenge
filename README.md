@@ -11,7 +11,7 @@ Você pode executar a aplicação utilizando uma das seguintes abordagens:
 
 2. Após, execute o comando: `docker compose up --build .`
 
-3. Feito isso sua aplicação estará rodando em `localhost:3333`.
+3. Feito isso sua aplicação estará rodando em localhost:3333.
 
 > Dica: O arquivo `docker-compose.yml` já está configurado com as variáveis corretas presentes no arquivo `.env.docker`, então você não precisa se preocupar com isto.
 
