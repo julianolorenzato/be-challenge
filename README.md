@@ -69,7 +69,7 @@ Esta rota cria um noto usuário.
 
 Esta rota autentica credenciais válidas para um usuário e devolve um token de autenticação JWT para ser utilizado em futuras requisições.
 
-> Obs: O token deve ser utilizado no header HTTP Authotization, no seguinte formato:
+> Obs: O token deve ser utilizado no header HTTP Authorization, no seguinte formato:
 >> Authorization: Bearer <seu.token.aqui>
 
 ##### Request body
