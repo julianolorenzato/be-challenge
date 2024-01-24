@@ -22,14 +22,21 @@ import Route from '@ioc:Adonis/Core/Route'
 
 const checkIsNumber = Route.matchers.number()
 
+Route.post('/login', 'UsersController.login')
+Route.post('/signup', 'UsersController.signup')
+
 Route.resource('customers', 'CustomersController')
 	.apiOnly()
 	.where('id', checkIsNumber)
+	.middleware({ '*': 'auth' })
 	.as('customers')
 
 Route.resource('products', 'ProductsController')
 	.apiOnly()
 	.where('id', checkIsNumber)
+	.middleware({ '*': 'auth' })
 	.as('products')
 
-Route.post('/sales', 'SalesController.register').where('id', checkIsNumber)
+Route.post('/sales', 'SalesController.register')
+	.where('id', checkIsNumber)
+	.middleware('auth')
