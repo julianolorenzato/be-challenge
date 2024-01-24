@@ -75,7 +75,7 @@ Esta rota autentica credenciais válidas para um usuário e devolve um token de 
 ##### Request body
 ```json
 {
-	"email": "admin@be.com",
+    "email": "admin@be.com",
     "password": "supersecret123"
 }
 ```
