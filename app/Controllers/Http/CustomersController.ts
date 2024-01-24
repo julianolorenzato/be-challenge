@@ -71,10 +71,12 @@ export default class CustomersController {
 			UpdateCostumerValidator
 		)
 
-		const maybeCustomer = await Customer.findBy('cpf', cpf)
-		if (maybeCustomer && maybeCustomer.id != id) {
-			response.status(400)
-			return { error: 'Este cpf já esta cadastrado no nosso sistema' }
+		if (cpf) {
+			const maybeCustomer = await Customer.findBy('cpf', cpf)
+			if (maybeCustomer && maybeCustomer.id != id) {
+				response.status(400)
+				return { error: 'Este cpf já esta cadastrado no nosso sistema' }
+			}
 		}
 
 		return await Database.transaction(async trx => {

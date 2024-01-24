@@ -82,9 +82,7 @@ Esta rota autentica credenciais válidas para um usuário e devolve um token de 
 
 ##### Response body
 ```json
-{
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDYxMTM0NTEsImV4cCI6MTcwNjE5OTg1MSwic3ViIjoiMiJ9.bquG1kalM4SFNkotYISufipwSUZifZJyRPiaHoGpQuE"
-}
+{ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDYxMTM0NTEsImV4cCI6MTcwNjE5OTg1MSwic3ViIjoiMiJ9.bquG1kalM4SFNkotYISufipwSUZifZJyRPiaHoGpQuE" }
 ```
 
 ### Products
@@ -168,7 +166,7 @@ Esta rota mostra detalhes sobre um produto.
 
 #### PUT /products/:id
 
-Esta rota atualiza informações sobre um produto.
+Esta rota atualiza informações de um produto.
 
 ##### URL params
 ```json
@@ -177,9 +175,7 @@ Esta rota atualiza informações sobre um produto.
 
 ##### Request body
 ```json
-{
-	"name": "Smartphone XI"
-}
+{ "name": "Smartphone XI" }
 ```
 
 ##### Response body
@@ -192,5 +188,202 @@ Esta rota atualiza informações sobre um produto.
 	"quantity_in_stock": 344,
 	"created_at": "2024-01-24T16:28:14.000+00:00",
 	"updated_at": "2024-01-24T16:38:54.456+00:00"
+}
+```
+
+#### DELETE /products/:id
+
+Esta rota deleta um produto.
+
+##### URL params
+```json
+{ "id": 2 }
+```
+
+### Customers
+
+#### POST /customers
+
+Esta rota cria um novo cliente.
+
+##### Request body
+```json
+{
+	"email": "johndoe@gmail.com",
+	"cpf": "111.111.111-11",
+	"phone": "22222 2222",
+	"address": {
+		"cep": "00000-000",
+		"street": "Av. 1 de Janeiro",
+		"number": 8450,
+		"neighborhood": "Green Village",
+		"complement": "Penúltima residência",
+		"city": "Florianópolis",
+		"country": "Brasil"
+	}
+}
+```
+
+##### Response body
+```json
+{
+	"email": "johndoe@gmail.com",
+	"cpf": "111.111.111-11",
+	"created_at": "2024-01-24T21:16:36.173+00:00",
+	"updated_at": "2024-01-24T21:16:36.173+00:00",
+	"id": 1
+}
+```
+
+#### GET /customers
+
+Esta rota lista todos os clientes.
+
+##### Response body
+```json
+[
+	{
+		"id": 1,
+		"email": "johndoe@gmail.com",
+		"cpf": "111.111.111-11",
+		"created_at": "2024-01-24T21:16:36.000+00:00",
+		"updated_at": "2024-01-24T21:16:36.000+00:00",
+		"address": {
+			"cep": "00000-000",
+			"number": 8450,
+			"street": "Av. 1 de Janeiro",
+			"neighborhood": "Green Village",
+			"complement": "Penúltima residência",
+			"city": "Florianópolis",
+			"country": "Brasil"
+		},
+		"phone": {
+			"number": "22222 2222"
+		}
+	},
+	{
+		"id": 2,
+		"email": "marydoe@gmail.com",
+		"cpf": "333.333.333-33",
+		"created_at": "2024-01-24T21:18:16.000+00:00",
+		"updated_at": "2024-01-24T21:18:16.000+00:00",
+		"address": {
+			"cep": "00000-000",
+			"number": 8450,
+			"street": "Av. 1 de Janeiro",
+			"neighborhood": "Green Village",
+			"complement": "Penúltima residência",
+			"city": "Florianópolis",
+			"country": "Brasil"
+		},
+		"phone": {
+			"number": "44444 4444"
+		}
+	}
+]
+```
+
+#### GET /customers/:id
+
+Esta rota mostra detalhes sobre um cliente e lista as vendas referentes a ele.
+
+##### URL params
+```json
+{ "id": 2 }
+```
+
+##### Response body
+```json
+[
+	{
+		"id": 2,
+		"email": "marydoe@gmail.com",
+		"cpf": "333.333.333-33",
+		"created_at": "2024-01-24T21:18:16.000+00:00",
+		"updated_at": "2024-01-24T21:18:16.000+00:00",
+		"sales": [
+			{
+				"id": 1,
+				"quantity": 3,
+				"unit_price": 3129.99,
+				"total_price": 9389.97,
+				"customer_id": 2,
+				"product_id": 1,
+				"created_at": "2024-01-24T21:20:48.000+00:00",
+				"updated_at": "2024-01-24T21:20:48.000+00:00"
+			},
+			{
+				"id": 2,
+				"quantity": 1,
+				"unit_price": 5229.99,
+				"total_price": 5229.99,
+				"customer_id": 2,
+				"product_id": 2,
+				"created_at": "2024-01-24T21:21:00.000+00:00",
+				"updated_at": "2024-01-24T21:21:00.000+00:00"
+			}
+		]
+	}
+]
+```
+
+#### PUT /products/:id
+
+Esta rota atualiza informações de um cliente.
+
+##### URL params
+```json
+{ "id": 1 }
+```
+
+##### Request body
+```json
+{ "phone": "77 7777 7777" }
+```
+
+##### Response body
+```json
+{
+	"id": 1,
+	"created_at": "2024-01-24T21:16:36.000+00:00",
+	"updated_at": "2024-01-24T21:32:52.094+00:00"
+}
+```
+
+#### DELETE /products:id
+
+Esta rota deleta um cliente.
+
+##### URL params
+```json
+{ "id": 1 }
+```
+
+### Sales
+
+#### POST /sales
+
+Esta rota registra a venda de uma quantidade de determinado produto a determinado cliente.
+
+##### Request body
+```json
+{
+	"customerId": 2,
+	"productId": 4,
+	"quantity": 1
+}
+```
+
+##### Response body
+```json
+{
+	"customer_id": 2,
+	"product_id": 4,
+	"quantity": 1,
+	"unit_price": 5229.99,
+	"total_price": 5229.99,
+	"created_at": "2024-01-24T21:21:00.348+00:00",
+	"updated_at": "2024-01-24T21:21:00.348+00:00",
+	"id": 2
 }
 ```
