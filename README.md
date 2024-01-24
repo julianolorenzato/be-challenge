@@ -21,7 +21,7 @@ Você pode executar a aplicação utilizando uma das seguintes abordagens:
 
 3. Feito isso sua aplicação estará rodando em localhost:3333.
 
-> Dica: O arquivo `docker-compose.yml` já está configurado com as variáveis corretas presentes no arquivo `.env.docker`, então você não precisa se preocupar com isto.
+> Dica: O arquivo `docker-compose.yml` já está configurado com as variáveis de ambiente corretas presentes no arquivo `.env.docker` e faz a migração das tabelas automaticamente, então você não precisa se preocupar com isto.
 
 
 ### Sem Docker Compose
@@ -30,9 +30,11 @@ Você pode executar a aplicação utilizando uma das seguintes abordagens:
 
 2. Você deve criar um arquivo `.env` e definir as variáveis de ambiente necessárias de acordo com o arquivo `.env.example`.
 
-3. Execute a aplicação digitando o comando: `npm run dev`.
+3. Execute o comando `node ace migration:fresh` para criar as tabelas no seu banco de dados. 
 
-4. Feito isso sua aplicação estará rodando na em localhost na porta especificada nas variáveis de ambiente.
+4. Execute a aplicação digitando o comando: `npm run dev`.
+
+5. Feito isso sua aplicação estará rodando na em localhost na porta especificada nas variáveis de ambiente.
 
 > Dica: Você pode copiar as variáveis definidas no arquvo `.env.example` modificando apenas aquelas relacionadas ao seu banco de dados MySQL.
 
